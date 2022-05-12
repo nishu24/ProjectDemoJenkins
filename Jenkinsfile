@@ -14,6 +14,7 @@ pipeline {
         withMaven {
         sh 'mvn test'
             }
+            junit skipPublishingChecks: true, testResults: target/test-classes/com/revature/*.java
         }
     }
     stage('Build') {
