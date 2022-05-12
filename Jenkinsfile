@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        registry = 'nishu24/ProjectDemoJenkins'
+        dockerHubCreds = 'docker_hub'
+        dockerImage = ''
+    }
   agent any
   stages {
     stage('Quality Gate') {
@@ -26,7 +31,10 @@ pipeline {
     }
     stage('Docker Image') {
         steps{
-            echo 'Docker Image'
+           script{
+           echo "$registry:$currentBuild.number"
+           dockerImage = docker.build "$registry"
+           }
         }
     }
     stage('Docker Deliver') {
